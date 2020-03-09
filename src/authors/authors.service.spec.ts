@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { AuthorsService } from './authors.service'
+import { AuthorsEntity } from './authors.entity';
 
 describe('AuthorsService', () => {
   let service: AuthorsService
@@ -7,6 +8,7 @@ describe('AuthorsService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [AuthorsService],
+      imports: [ AuthorsEntity ],
     }).compile()
 
     service = module.get<AuthorsService>(AuthorsService)
@@ -23,9 +25,9 @@ describe('AuthorsService', () => {
     })
   })
 
-  describe('getAuthorByPermalink: ', () => {
+  describe('getAuthor: ', () => {
     it('should be defined', () => {
-      expect(service.getAuthorByPermalink).toBeDefined()
+      expect(service.getAuthor).toBeDefined()
     })
   })
 

@@ -12,6 +12,7 @@ lerna-debug.log*
 
 # Config
 *.env
+ormconfig.json
 
 # OS
 .DS_Store

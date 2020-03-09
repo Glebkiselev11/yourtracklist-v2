@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AuthorsController } from './authors/authors.controller';
-import { ReleasesController } from './releases/releases.controller';
+import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthorsModule } from './authors/authors.module';
 import { ReleasesModule } from './releases/releases.module';
 
@@ -10,6 +9,7 @@ import { ReleasesModule } from './releases/releases.module';
     ConfigModule.forRoot(), // For env files 
     AuthorsModule, 
     ReleasesModule, 
+    TypeOrmModule.forRoot()
   ]
 })
 export class AppModule {}

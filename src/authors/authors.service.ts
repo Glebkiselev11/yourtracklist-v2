@@ -1,28 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
+import { Repository } from 'typeorm'
+import { AuthorsEntity } from './authors.entity'
+import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
 export class AuthorsService {
-
-  private authors = [
-    {
-      permalink: "satanbeat",
-      name: "SATANBEAT",
-      tags: ['witch-house', 'ambient', 'drone'],
-    },
-    {
-      permalink: "cat-soup",
-      name: "cat soup",
-      tags: ['sesh', 'ambient', 'hip-hop'],
-    },
-  ]
+  
+  constructor(
+    @InjectRepository(AuthorsEntity) 
+    private authorsRepository: Repository<AuthorsEntity>,
+  ) {}
 
   // Return all authors
-  getAuthors() { 
-    return this.authors
+  async getAuthors() { 
+    return await this.authorsRepository.find()
   }
 
-  getAuthorByPermalink(permalink :string) {
-    return this.authors.find(author => author.permalink === permalink)
+  async createAuthor(data: object) {
+    try {
+      const author = await this.authorsRepository.create(data)
+      await this.authorsRepository.save(author)
+      return author
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  async getAuthor(permalink :string) {
+    return await this.authorsRepository.findOne({where: {permalink}})
+  }
+
+  async deleteAuthor(permalink: string) {
+    await this.authorsRepository.delete({permalink})
+    return {deleted: true}
   }
 
 

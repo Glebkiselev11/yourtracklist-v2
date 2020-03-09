@@ -1,28 +1,35 @@
-import { Controller, Get, Param, Post, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Delete, Body } from '@nestjs/common';
 import {AuthorsService} from './authors.service'
+import {AuthorsEntity} from './authors.entity'
 
 @Controller('api/authors')
 export class AuthorsController {
   constructor(private readonly authorsService: AuthorsService) {}
 
   @Get()
-  getAuthors() :object[] {
+  getAuthors() :Promise<AuthorsEntity[]> {
     return this.authorsService.getAuthors()
   }
 
   @Get(':permalink')
   getAuthor(@Param('permalink') permalink: string) :object {
-    return this.authorsService.getAuthorByPermalink(permalink)
+    return this.authorsService.getAuthor(permalink)
   }
 
   @Post()
-  addAuthor() :string {
-    return `add author`
+  addAuthor(
+    @Body('name') name: string,
+    @Body('permalink') permalink: string
+  ) {
+    return this.authorsService.createAuthor({
+      name,
+      permalink,
+    })
   }
 
   @Delete(':permalink')
-  deleteAuthor(@Param('permalink') permalink: string) :string {
-    return `delete author by permalink ${permalink}`
+  deleteAuthor(@Param('permalink') permalink: string) {
+    return this.authorsService.deleteAuthor(permalink)
   }
 
 }
