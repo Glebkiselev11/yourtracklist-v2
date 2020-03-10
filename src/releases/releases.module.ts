@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { ReleasesController } from './releases.controller';
+import { Module } from '@nestjs/common'
+import { ReleasesController } from './releases.controller'
 
 @Module({
-  controllers: [ReleasesController]
+  controllers: [ReleasesController],
 })
 export class ReleasesModule {}

@@ -1,8 +1,7 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common'
 
 @Controller('api/releases')
 export class ReleasesController {
-
   @Get()
   getReleases(
     @Query('limit') prodLimit: number = 4,
@@ -15,5 +14,4 @@ export class ReleasesController {
 
     return null
   }
-
 }

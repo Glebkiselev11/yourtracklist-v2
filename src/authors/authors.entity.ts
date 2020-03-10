@@ -2,20 +2,20 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity('authors')
 export class AuthorsEntity {
-  @PrimaryGeneratedColumn('increment') 
+  @PrimaryGeneratedColumn('increment')
   id: number
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     length: 150,
-    unique: true
-  }) 
+    unique: true,
+  })
   permalink: string
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     length: 150,
-    unique: false
-  })  
+    unique: false,
+  })
   name: string
 }

@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { AuthorsController } from './authors.controller';
-import { AuthorsService } from './authors.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common'
+import { AuthorsController } from './authors.controller'
+import { AuthorsService } from './authors.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthorsEntity } from './authors.entity'
 
 @Module({
