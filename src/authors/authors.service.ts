@@ -5,14 +5,13 @@ import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
 export class AuthorsService {
-  
   constructor(
-    @InjectRepository(AuthorsEntity) 
+    @InjectRepository(AuthorsEntity)
     private authorsRepository: Repository<AuthorsEntity>,
   ) {}
 
   // Return all authors
-  async getAuthors() { 
+  async getAuthors() {
     return await this.authorsRepository.find()
   }
 
@@ -24,17 +23,14 @@ export class AuthorsService {
     } catch (error) {
       console.log(error)
     }
-    
   }
 
-  async getAuthor(permalink :string) {
-    return await this.authorsRepository.findOne({where: {permalink}})
+  async getAuthor(permalink: string) {
+    return await this.authorsRepository.findOne({ where: { permalink } })
   }
 
   async deleteAuthor(permalink: string) {
-    await this.authorsRepository.delete({permalink})
-    return {deleted: true}
+    await this.authorsRepository.delete({ permalink })
+    return { deleted: true }
   }
-
-
 }
