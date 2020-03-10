@@ -1,21 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('authors')
 export class AuthorsEntity {
   @PrimaryGeneratedColumn('increment')
-  id: number
+  id: number;
 
   @Column({
     type: 'varchar',
     length: 150,
     unique: true,
   })
-  permalink: string
+  permalink: string;
 
   @Column({
     type: 'varchar',
     length: 150,
     unique: false,
   })
-  name: string
+  name: string;
 }

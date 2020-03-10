@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common'
+import { Controller, Get, Query } from '@nestjs/common';
 
 @Controller('api/releases')
 export class ReleasesController {
@@ -9,9 +9,9 @@ export class ReleasesController {
     @Query('sort') prodSort: string = 'new',
     @Query('tags') prodTags: string,
   ) {
-    const tags: string[] = prodTags.split(',')
-    console.log(tags)
+    const tags: string[] = prodTags.split(',');
+    console.log(tags);
 
-    return null
+    return null;
   }
 }
