@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { AuthorsEntity } from './authors.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthorsDTO } from './authors.dto';
 
 @Injectable()
 export class AuthorsService {
@@ -15,22 +16,33 @@ export class AuthorsService {
     return await this.authorsRepository.find();
   }
 
-  async createAuthor(data: object) {
-    try {
-      const author = await this.authorsRepository.create(data);
-      await this.authorsRepository.save(author);
-      return author;
-    } catch (error) {
-      console.log(error);
+  async getAuthor(permalink: string) {
+    const author = await this.authorsRepository.findOne({
+      where: { permalink },
+    });
+    if (!author) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
+
+    return author;
   }
 
-  async getAuthor(permalink: string) {
-    return await this.authorsRepository.findOne({ where: { permalink } });
+  async createAuthor(data: AuthorsDTO) {
+    const author = await this.authorsRepository.create(data);
+    await this.authorsRepository.save(author);
+    return author;
   }
 
   async deleteAuthor(permalink: string) {
+    // First checked if the author
+    const author = await this.authorsRepository.findOne({
+      where: { permalink },
+    });
+    if (!author) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
+
     await this.authorsRepository.delete({ permalink });
-    return { deleted: true };
+    return author;
   }
 }

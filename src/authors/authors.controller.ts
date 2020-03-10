@@ -1,9 +1,21 @@
-import { Controller, Get, Param, Post, Delete, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Delete,
+  Body,
+  UsePipes,
+  Logger,
+} from '@nestjs/common';
 import { AuthorsService } from './authors.service';
 import { AuthorsEntity } from './authors.entity';
+import { ValidationPipe } from '../shared/validation.pipe';
+import { AuthorsDTO } from './authors.dto';
 
 @Controller('api/authors')
 export class AuthorsController {
+  private logger = new Logger('AuthorsController');
   constructor(private readonly authorsService: AuthorsService) {}
 
   @Get()
@@ -17,11 +29,10 @@ export class AuthorsController {
   }
 
   @Post()
-  addAuthor(@Body('name') name: string, @Body('permalink') permalink: string) {
-    return this.authorsService.createAuthor({
-      name,
-      permalink,
-    });
+  @UsePipes(new ValidationPipe())
+  addAuthor(@Body() data: AuthorsDTO) {
+    this.logger.log(JSON.stringify(data));
+    return this.authorsService.createAuthor(data);
   }
 
   @Delete(':permalink')
